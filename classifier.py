@@ -35,14 +35,14 @@ data_augmentation = tf.keras.Sequential([
   tf.keras.layers.RandomRotation(0.2),
 ])
 
-for image, _ in train_dataset.take(1):
-  plt.figure(figsize=(10, 10))
-  first_image = image[0]
-  for i in range(9):
-    ax = plt.subplot(3, 3, i + 1)
-    augmented_image = data_augmentation(tf.expand_dims(first_image, 0))
-    plt.imshow(augmented_image[0] / 255)
-    plt.axis('off')
+# for image, _ in train_dataset.take(1):
+#   plt.figure(figsize=(10, 10))
+#   first_image = image[0]
+#   for i in range(9):
+#     ax = plt.subplot(3, 3, i + 1)
+#     augmented_image = data_augmentation(tf.expand_dims(first_image, 0))
+#     plt.imshow(augmented_image[0] / 255)
+#     plt.axis('off')
 
 
 
@@ -99,7 +99,7 @@ history = model.fit(train_dataset,
 
 
 # Prediction
-class_names = ["dogs","cats"]
+class_names = ["cats","dogs"]
 image_batch, label_batch = test_dataset.as_numpy_iterator().next()
 predictions = model.predict_on_batch(image_batch).flatten()
 predictions = tf.where(predictions < 0.5, 0, 1)
@@ -113,3 +113,4 @@ for i in range(9):
   plt.imshow(image_batch[i].astype("uint8"))
   plt.title(class_names[predictions[i]])
   plt.axis("off")
+plt.show()
